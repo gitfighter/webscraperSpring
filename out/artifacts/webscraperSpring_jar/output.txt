@@ -1,0 +1,7 @@
+
+USDHUF: 350.00 ::Last Update: 21:41:27
+ TIPS30: 97.79 ::Last Update: 21:41:29
+ EURUSD: 1.0661 ::Last Update: 21:41:30
+ PEMEX48: ntity 15 Minutes Delayed Data Name Petroleos Mexicanos 6.350% Call 12fb48 ISIN code US71654QCL41 Status SENIOR Prices updated on Mar 01 2023 09:2 ::Last Update: 21:41:31
+ REPCON: Last price	 84.49
+ ::Last Update: 21:41:47
