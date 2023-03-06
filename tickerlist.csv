@@ -1,6 +1,4 @@
-USDHUF,span.text-2xl,https://www.investing.com/currencies/usd-huf;
-TIPS30,span.priceText__0550103750,https://www.bloomberg.com/quote/GTII30:GOV;
-EURUSD,span.text-2xl,https://www.investing.com/currencies/eur-usd;
-PEMEX48,body,https://www.borsaitaliana.it/borsa/obbligazioni/eurotlx/dati-completi.html?isin=US71654QCL41&lang=en;
-REPCON,x,https://www.boerse-frankfurt.de/bond/xs0334989000;
+HUF6MREF,//*[@id="scroll-main-container"]/div[1]/div/div/div/div[2]/div/div/div/div/div[3]/div/div[1]/div/div[3]/div/div/div/div[9]/div/div,https://akk.hu/;
+HUF20YREF,//*[@id="scroll-main-container"]/div[1]/div/div/div/div[2]/div/div/div/div/div[3]/div/div[1]/div/div[3]/div/div/div/div[27]/div/div,https://akk.hu/;
+
 

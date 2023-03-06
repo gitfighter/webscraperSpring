@@ -1,4 +1,4 @@
-/** handles output to different subsystems/file */
+/** handles output to different subsystems/files */
 
 package engine.webcrawler;
 
@@ -17,9 +17,9 @@ public class Output
 
 	protected String getOutput(String name, String element)
 	{
-		System.out.println(name + " Done");
-		return "\n" + name + ": " + element + " " +
-				"::Last Update: " + LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+		System.out.println(name+ " Done");
+		return name + ": " + element + " " +
+				"::Last Update: " + LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))+"\n";
 	}
 
 	protected void arraylistToFile(String filename, ArrayList<String> what) throws IOException
@@ -31,6 +31,5 @@ public class Output
 		}
 		fileWrite.close();
 	}
-
 }
 

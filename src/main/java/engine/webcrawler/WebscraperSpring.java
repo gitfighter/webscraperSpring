@@ -6,8 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
+
 
 @SpringBootApplication
 public class WebscraperSpring
@@ -21,17 +20,23 @@ public class WebscraperSpring
 			var inputDummy=new InputData("tickerlist.csv", 3);
 			final String[][] inputData=inputDummy.getInputElements();
 
+
 			ArrayList<String> outputValues=new ArrayList<>();
 			var output=new Output();
 
-//csv info bepakolasa a krealt 2d arraybol, formatalt eredmenyek kidobbasa az outputValues arraylistbe
+//puts array elements from csv into pipline, outputs formatted values to outputValues arraylist
 			for(int j=0;j< inputData.length;j++)
 			{
-				outputValues.add(elementPipeline(inputData[j][0], inputData[j][1], inputData[j][2]));
-				TimeUnit.MILLISECONDS.sleep(new Random().nextInt(314,778)); //pusztamelleki antibotprotekcio
+				outputValues.add(
+						elementPipeline(
+								inputData[j][0],
+								inputData[j][1],
+								inputData[j][2]
+						)
+				);
 			}
 
-//arraylist kiirasa fileba
+//prints outputValues to file
 			output.arraylistToFile("output.txt", outputValues);
 		}
 		catch (Exception e)
@@ -41,14 +46,12 @@ public class WebscraperSpring
 
 	}
 
-	protected static String elementPipeline(String name, String element, String url)
+	protected static String elementPipeline(String name, String element, String url) throws InterruptedException
 	{
-//#1 LETOLTI
-		var Page = new WebCrawler(url);
-//#2 ELEMENT VALUET EXTRACTOLJA
-		var Element=new ValueExtractor(Page, element,url);
-//#3 FORMAZOTT STRINGET RETURNOLI (amit berak a mai a stringarraylistba)
-		return new Output().getOutput(name, Element.getElementValue());
+//#1 DOWNLOADS, EXTRACTS ELEMENTS
+		var elementValue = new WebCrawler(url, element);
+//#2 RETURNS FORMATTED VALUES (that main puts into arraylist outputValues)
+		return new Output().getOutput(name, elementValue.getElementValue());
 	}
 
 }
