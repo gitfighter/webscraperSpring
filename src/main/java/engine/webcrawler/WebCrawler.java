@@ -3,6 +3,7 @@
 package engine.webcrawler;
 
 import org.jsoup.Jsoup;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -11,9 +12,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+
 import java.time.Duration;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 public class WebCrawler
 {
@@ -25,6 +25,7 @@ public class WebCrawler
 	{
 		this.url = url;
 
+//element xpaths same in the below cases
 		if(url.contains("frankfurt"))
 		{
 			this.element="/html/body/app-root/app-wrapper/div/div[2]/app-bond/div[2]/div[2]/div[2]/div/div[1]/app-widget-price-box/div/div/table/tbody/tr[1]/td[2]";
@@ -42,13 +43,16 @@ public class WebCrawler
 			this.element=element;
 		}
 
-
+//using selenium or jsoup
 		if (
-				url.contains("frankfurt") ||
-				url.contains(("akk.hu"))
+				url.contains("frankfurt")
 			)
 		{
-			TimeUnit.MILLISECONDS.sleep(new Random().nextInt(814,1178)); //basic antibot protection
+			downloadSelenium();
+			//TimeUnit.MILLISECONDS.sleep(new Random().nextInt(514,778)); //basic antibot protection
+		}
+		else if (url.contains("akk.hu"))
+		{
 			downloadSelenium();
 		}
 		else
@@ -66,20 +70,20 @@ public class WebCrawler
 		}
 	}
 
+
 	private void downloadSelenium()
 	{
 		try
 		{
 			final ChromeOptions options=new ChromeOptions();
 			options.addArguments("--headless");
-			ChromeDriver driver=new ChromeDriver(options);
+			var driver= new ChromeDriver(options);
 
 			driver.get(url);
 
 			WebElement lastPrice=
 					new WebDriverWait(driver, Duration.ofSeconds(2)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(element)));
 			((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", lastPrice);
-			//final WebElement lastPrice= driver.findElement(By.xpath(element));
 
 			this.elementValue=lastPrice.getText();
 

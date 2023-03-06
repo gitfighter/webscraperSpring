@@ -11,15 +11,4 @@ public class SeleniumConfiguration
 	{
 		System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
 	}
-
-	/*
-	@Bean
-	public ChromeDriver driver()
-	{
-		final ChromeOptions options=new ChromeOptions();
-		options.addArguments("--headless");
-		return new ChromeDriver(options);
-	}
-
-	 */
 }

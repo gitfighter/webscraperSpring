@@ -1,2 +1,7 @@
-HUF6M: 14,94% ::Last Update: 04:48:51
- HUF20Y: 8,23% ::Last Update: 04:48:57
+USDHUF: 353.30 ::Last Update: 20:28:30
+ TIPS30: 99.53 ::Last Update: 20:28:31
+ EURUSD: 1.0670 ::Last Update: 20:28:32
+ PEMEX48:  ::Last Update: 20:28:37
+ HUF6MREF: 14,95% ::Last Update: 20:28:43
+ HUF20YREF: 8,08% ::Last Update: 20:28:48
+ REPCON: 84.07 ::Last Update: 20:28:52

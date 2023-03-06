@@ -8,9 +8,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.ArrayList;
 
 
+
 @SpringBootApplication
 public class WebscraperSpring
 {
+
 	public static void main(String[] args)
 	{
 				SpringApplication.run(WebscraperSpring.class, args);
@@ -43,7 +45,6 @@ public class WebscraperSpring
 		{
 			e.printStackTrace();
 		}
-
 	}
 
 	protected static String elementPipeline(String name, String element, String url) throws InterruptedException
