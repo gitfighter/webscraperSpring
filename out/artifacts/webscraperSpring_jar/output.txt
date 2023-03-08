@@ -1,7 +1,7 @@
-USDHUF: 353.23 ::Last Update: 21:00:20
- TIPS30: 99.59 ::Last Update: 21:00:20
- EURUSD: 1.0675 ::Last Update: 21:00:21
- REPCON: 84.07 ::Last Update: 21:00:26
- PEMEX48: 61.27 ::Last Update: 21:00:30
- HUF6MREF: 14,95% ::Last Update: 21:00:35
- HUF20YREF: 8,08% ::Last Update: 21:00:41
+USDHUF: 359.01 ::Last Update: 06:18:03
+ TIPS30: 98.73 ::Last Update: 06:18:04
+ EURUSD: 1.0530 ::Last Update: 06:18:05
+ REPCON:  ::Last Update: 06:18:15
+ HUF6MREF: 14,94% ::Last Update: 06:18:20
+ HUF20YREF: 8,04% ::Last Update: 06:18:24
+ PEMEX48: 62.03 ::Last Update: 06:18:27

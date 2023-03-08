@@ -1,13 +1,10 @@
-/** main class for instructions */
+/** main class for instructions
+ * mvn clean compile assembly:single */
 
 package engine.webcrawler;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.util.ArrayList;
-
-
 
 @SpringBootApplication
 public class WebscraperSpring
@@ -17,42 +14,6 @@ public class WebscraperSpring
 	{
 				SpringApplication.run(WebscraperSpring.class, args);
 
-		try
-		{
-			var inputDummy=new InputData("tickerlist.csv", 3);
-			final String[][] inputData=inputDummy.getInputElements();
-
-
-			ArrayList<String> outputValues=new ArrayList<>();
-			var output=new Output();
-
-//puts array elements from csv into pipline, outputs formatted values to outputValues arraylist
-			for(int j=0;j< inputData.length;j++)
-			{
-				outputValues.add(
-						elementPipeline(
-								inputData[j][0],
-								inputData[j][1],
-								inputData[j][2]
-						)
-				);
-			}
-
-//prints outputValues to file
-			output.arraylistToFile("output.txt", outputValues);
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
+		var router=new Router();
 	}
-
-	protected static String elementPipeline(String name, String element, String url) throws InterruptedException
-	{
-//#1 DOWNLOADS, EXTRACTS ELEMENTS
-		var elementValue = new WebCrawler(url, element);
-//#2 RETURNS FORMATTED VALUES (that main puts into arraylist outputValues)
-		return new Output().getOutput(name, elementValue.getElementValue());
-	}
-
 }
