@@ -50,7 +50,7 @@ public class Router
 		}
 	}
 
-	private static String lpElementPipeline(String name, String element, String url)
+	private static String lpElementPipeline(String name, String element, String url) throws InterruptedException
 	{
 //constuctor starts processing input sent by Router, calls functions
 		var lpValue = new LastpriceCrawler(name, url, element);

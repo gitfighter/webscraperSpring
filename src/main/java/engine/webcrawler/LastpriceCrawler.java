@@ -10,6 +10,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class LastpriceCrawler extends WebCrawler
 {
@@ -18,7 +20,7 @@ public class LastpriceCrawler extends WebCrawler
 	private final String name;
 
 //constuctor starts processing input sent by Router, calls functions
-	public LastpriceCrawler(String name, String url, String element)
+	public LastpriceCrawler(String name, String url, String element) throws InterruptedException
 	{
 		super(url);
 		this.name=name;
@@ -84,7 +86,7 @@ public class LastpriceCrawler extends WebCrawler
 			driver.get(url);
 
 			WebElement lastPrice=
-					new WebDriverWait(driver, Duration.ofSeconds(2)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(element)));
+					new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(element)));
 			((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", lastPrice);
 
 			this.elementValue =lastPrice.getText();
