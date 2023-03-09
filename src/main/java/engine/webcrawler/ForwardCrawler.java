@@ -51,7 +51,7 @@ public class ForwardCrawler extends WebCrawler
 			this.spot = Double.parseDouble(lastPriceElement.getText());
 //get forward table
 			WebElement fwdPriceElement =
-					new WebDriverWait(driver, Duration.ofSeconds(2)).until(ExpectedConditions.visibilityOfElementLocated(By.ByXPath.xpath(element)));
+					new WebDriverWait(driver, Duration.ofSeconds(0)).until(ExpectedConditions.visibilityOfElementLocated(By.ByXPath.xpath(element)));
 			((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", fwdPriceElement);
 
 //got the rows

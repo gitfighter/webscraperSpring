@@ -11,12 +11,19 @@ public class InputData
 	private String filename;
 	private int csvsize;
 	private String[][] inputElements;
+	private String[] inputArray;
 
-	protected InputData(String filename, int csvsize) throws IOException
+	public InputData(String filename, int csvsize) throws IOException
 	{
 		this.filename = filename;
 		this.csvsize=csvsize;
 		this.inputElements=csvTo2dArray(filename, 3);
+	}
+
+	public InputData(String filename) throws IOException
+	{
+		this.filename = filename;
+		this.inputArray=txtToArray(filename);
 	}
 
 	private static String[][] csvTo2dArray (String filename, int csvsize) throws IOException
@@ -37,7 +44,17 @@ public class InputData
 		return inputElements;
 	}
 
-	protected String[] urlArray () //gives url list from csv
+	private static String[] txtToArray(String filename) throws IOException
+	{
+		File openedFile = new File(filename);
+		String openedFileParse = Jsoup.parse(openedFile, null).text();
+
+		String[] inputData = openedFileParse.split(";");
+
+		return inputData;
+	}
+
+	private String[] urlArray () //gives url list from csv
 	{
 		String [] urlArray=new String[inputElements.length];
 
@@ -49,7 +66,7 @@ public class InputData
 		return urlArray;
 	}
 
-	protected String[] elementArray() //gives element list from csv
+	private String[] elementArray() //gives element list from csv
 	{
 		String [] elementArray=new String[inputElements.length];
 
@@ -61,7 +78,7 @@ public class InputData
 		return elementArray;
 	}
 
-	protected String[] tickerArray() //gives ticker list from csv
+	private String[] tickerArray() //gives ticker list from csv
 	{
 		String [] tickerArray=new String[inputElements.length];
 
@@ -73,24 +90,30 @@ public class InputData
 		return tickerArray;
 	}
 
-	protected String[][] getInputElements()
+	public String[][] getInputElements()
 	{
 		return inputElements;
 	}
 
-	protected String[] getURLArray ()
+	public String[] getInputArray()
+	{
+		return inputArray;
+	}
+
+	public String[] getURLArray ()
 	{
 		return urlArray ();
 	}
 
-	protected String[] getElementArray()
+	public String[] getElementArray()
 	{
 		return elementArray();
 	}
 
-	protected String[] getTickerArray()
+	public String[] getTickerArray()
 	{
 		return tickerArray();
 	}
+
 
 }

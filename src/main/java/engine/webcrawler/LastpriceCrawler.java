@@ -18,6 +18,7 @@ public class LastpriceCrawler extends WebCrawler
 	private String elementValue;
 	protected final String element;
 	private final String name;
+	private int timeout=0; //wait for element visibility
 
 //constuctor starts processing input sent by Router, calls functions
 	public LastpriceCrawler(String name, String url, String element) throws InterruptedException
@@ -28,14 +29,22 @@ public class LastpriceCrawler extends WebCrawler
 		if(url.contains("frankfurt"))
 		{
 			this.element="/html/body/app-root/app-wrapper/div/div[2]/app-bond/div[2]/div[2]/div[2]/div/div[1]/app-widget-price-box/div/div/table/tbody/tr[1]/td[2]";
+			this.timeout=2;
 		}
 		else if(url.contains("investing.com"))
 		{
 			this.element="span.text-2xl";
+			this.timeout=1;
 		}
 		else if(url.contains("bloomberg.com"))
 		{
 			this.element="span.priceText__0550103750";
+			this.timeout=1;
+		}
+		else if(url.contains("akk.hu"))
+		{
+			timeout=2;
+			this.element=element;
 		}
 		else
 		{
@@ -47,8 +56,9 @@ public class LastpriceCrawler extends WebCrawler
 			url.contains("frankfurt")
 		)
 		{
+			TimeUnit.MILLISECONDS.sleep(new Random().nextInt(514,778)); //seems to need it not sure why
 			downloadSelenium();
-			//TimeUnit.MILLISECONDS.sleep(new Random().nextInt(514,778)); //basic antibot protection
+			TimeUnit.MILLISECONDS.sleep(new Random().nextInt(514,778)); //seems to need it not sure why
 		}
 		else if (url.contains("akk.hu"))
 		{
@@ -86,7 +96,7 @@ public class LastpriceCrawler extends WebCrawler
 			driver.get(url);
 
 			WebElement lastPrice=
-					new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(element)));
+					new WebDriverWait(driver, Duration.ofSeconds(timeout)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(element)));
 			((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", lastPrice);
 
 			this.elementValue =lastPrice.getText();

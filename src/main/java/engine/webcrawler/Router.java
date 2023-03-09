@@ -13,7 +13,7 @@ public class Router
 //reads tickers&required data to process from file
 			var lpInputDummy=new InputData("lastpricelist.csv", 3);
 			final String[][] lpInputData=lpInputDummy.getInputElements();
-			var fwdInputDummy=new InputData("fwdpricelist.csv", 3);
+			var fwdInputDummy=new InputData("fwdpricelist.csv", 3); //,, used in csv for (stupid?) convention
 			final String[][] fwdInputData=fwdInputDummy.getInputElements();
 //for accessing functions in Output, amateur
 			var output=new Output();
@@ -24,7 +24,10 @@ public class Router
 //puts fwd price inputdata into download&processing pipeline /CALLS FUNCTIONS IN CONSTRUCTOR/
 			for(int j=0;j< fwdInputData.length;j++)
 			{
-				fwdOutputValues.add(fwdElementPipeline(fwdInputData[j][0], fwdInputData[j][1], fwdInputData[j][2]));
+				fwdOutputValues.add(fwdElementPipeline(
+						fwdInputData[j][0],
+						fwdInputData[j][1],
+						fwdInputData[j][2]));
 			}
 
 //also adds processed last prices to arraylist for printing to file

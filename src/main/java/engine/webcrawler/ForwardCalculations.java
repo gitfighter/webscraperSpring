@@ -1,8 +1,11 @@
 package engine.webcrawler;
 
+import engine.webcrawler.maps.CurrencyMaps;
+
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ForwardCalculations
 {
@@ -46,32 +49,42 @@ public class ForwardCalculations
 			ArrayList<Double> bidFwdPercentNotannualized = new ArrayList<>();
 			ArrayList<Double> offerFwdPercentNotannualized = new ArrayList<>();
 
-//calculate annualized fwd yields for CHFHUF price format currencies
+//deciding if we need to divide the foward points by 100 or 10000
+			int divider=0;
+
+				if(
+						tickername.contains("JPY") ||
+						tickername.contains("HUF") ||
+						tickername.contains("ISK") ||
+						tickername.contains("RSD") || //not sure but probably from here
+						tickername.contains("KES") ||
+						tickername.contains("IDR") ||
+						tickername.contains("NGN") ||
+						tickername.contains("UYU"))
+				{
+					divider=100;
+				}
+				else divider=10000;
+
+//calculate annualized fwd yields
+
 			for (int i = 0; i < bid.size(); i++)
 			{
-				bidFwdPercentNotannualized.add((spot + bid.get(i) / 100) / spot - 1);
-				offerFwdPercentNotannualized.add((spot + offer.get(i) / 100) / spot - 1);
+				bidFwdPercentNotannualized.add((spot + bid.get(i) / divider) / spot - 1);
+				offerFwdPercentNotannualized.add((spot + offer.get(i) / divider) / spot - 1);
 			}
-			//rough annualizer array for 1m+
+//rough annualizer array for 1m+
+//constructor starts fwdAnnualizeMap() which creates concurrent hashmap for annualizing tenor yields
+			CurrencyMaps annualizers=new CurrencyMaps(1); //2: annualizer map
 			ArrayList<Double> annualizer = new ArrayList<>();
-			for (int i = 0; i < 6; i++)
-			{
-				annualizer.add(1.0);
-			}
-			annualizer.add((double) 1 / 30 * 360);
-			annualizer.add((double) 1 / 60 * 360);
-			annualizer.add((double) 1 / 90 * 360);
-			annualizer.add((double) 1 / 120 * 360);
-			annualizer.add((double) 1 / 150 * 360);
-			annualizer.add((double) 1 / 180 * 360);
-			annualizer.add((double) 1 / 270 * 360);
-			annualizer.add((double) 1);
-			annualizer.add((double) 1 / 2);
-			annualizer.add((double) 1 / 3);
-			annualizer.add((double) 1 / 5);
-			annualizer.add((double) 1 / 10);
 
-			//roughly annualized 1m+ bid/offer
+
+			for (int i = 0; i < tenor.size(); i++)
+			{
+				annualizer.add(annualizers.getFwdAnnualizeMap().getOrDefault(tenor.get(i), 0.0));
+			}
+
+//roughly annualized 1m+ bid/offer
 			ArrayList<Double> bidFwdPercent = new ArrayList<>();
 			ArrayList<Double> offerFwdPercent = new ArrayList<>();
 
@@ -91,17 +104,17 @@ public class ForwardCalculations
 		}
 	}
 
-	public ArrayList<Double> getBidfwdPercent()
+	protected ArrayList<Double> getBidfwdPercent()
 	{
 		return bidfwdPercent;
 	}
 
-	public ArrayList<Double> getOfferfwdPercent()
+	protected ArrayList<Double> getOfferfwdPercent()
 	{
 		return offerfwdPercent;
 	}
 
-	public ArrayList<String> getTenor()
+	protected ArrayList<String> getTenor()
 	{
 		return tenor;
 	}

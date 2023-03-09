@@ -58,14 +58,17 @@ public class Output
 			for(int i=0;i<x.length;i++)
 			{
 				if(
-						x[i].contains("1M") ||
-						x[i].contains("2M") ||
-						x[i].contains("3M") ||
-						x[i].contains("4M") ||
-						x[i].contains("5M") ||
-						x[i].contains("6M") ||
-						x[i].contains("9M") ||
-						x[i].contains("1Y")
+
+						//x[i].contains("ON") || //for test only
+
+						x[i].contains(" 1M") ||
+						x[i].contains(" 2M") ||
+						x[i].contains(" 3M") ||
+						x[i].contains(" 4M") ||
+						x[i].contains(" 5M") ||
+						x[i].contains(" 6M") ||
+						x[i].contains(" 9M") ||
+						x[i].contains(" 1Y")
 				)
 				fileWrite.write(x[i]);
 
