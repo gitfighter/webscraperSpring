@@ -1,5 +1,3 @@
-//FORWARD ONLY FOR CHFHUF STYLE FORWARDS @MOM
-
 package engine.webcrawler;
 
 import java.util.ArrayList;
@@ -15,8 +13,8 @@ public class Router
 			final String[][] lpInputData=lpInputDummy.getInputElements();
 			var fwdInputDummy=new InputData("fwdpricelist.csv", 3); //,, used in csv for (stupid?) convention
 			final String[][] fwdInputData=fwdInputDummy.getInputElements();
+
 //for accessing functions in Output, amateur
-			var output=new Output();
 			ArrayList<String> lpOutputValues=new ArrayList<>();
 			ArrayList<String[]> fwdOutputValues=new ArrayList<>();
 
@@ -40,10 +38,13 @@ public class Router
 				));
 			}
 
+
 //writes last prices then fwdtables to files
+			var output=new Output();
 			output.arraylistToFile("output.txt", lpOutputValues);
 
 			output.fwdtableToFile("fwdoutput.txt",fwdOutputValues);
+
 			System.out.println("Processing done, have a nice day!");
 
 		}

@@ -15,5 +15,6 @@ public class WebscraperSpring
 				SpringApplication.run(WebscraperSpring.class, args);
 
 		var router=new Router();
+
 	}
 }

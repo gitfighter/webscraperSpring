@@ -2,13 +2,15 @@
 
 package engine.webcrawler;
 
+import org.openqa.selenium.WebElement;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-
+import java.util.List;
 
 public class Output
 {
@@ -26,7 +28,7 @@ public class Output
 					"::Last Update: " + LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + "\n";
 	}
 
-	protected void arraylistToFile(String filename, ArrayList<String> what) throws IOException
+	public void arraylistToFile(String filename, ArrayList<String> what) throws IOException
 	{
 		var fileWrite = new BufferedWriter(new FileWriter(filename));
 		for (String x : what)
@@ -36,73 +38,71 @@ public class Output
 		fileWrite.close();
 	}
 
-	protected void arraylistHybridToFile(String filename, ArrayList<String[]> what) throws IOException
+	public void arraylistContainingStringArrayToFile(String filename, ArrayList<String[]> what)
 	{
-		var fileWrite = new BufferedWriter(new FileWriter(filename));
-		for (String[] x : what)
+		try (FileWriter tmp=new FileWriter(filename))
 		{
-			for(int i=0;i<x.length;i++)
+			var fileWrite = new BufferedWriter(tmp);
+			for (String[] x : what)
 			{
-				fileWrite.write(x[i]);
+				for (int i=0;i<x.length;i++)
+					fileWrite.write(x[i]);
 			}
-			fileWrite.write("\n");
+			fileWrite.close();
 		}
-		fileWrite.close();
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
-	protected void fwdtableToFile(String filename, ArrayList<String[]> what) throws IOException
+	public void fwdtableToFile(String filename, ArrayList<String[]> what)
 	{
-		var fileWrite = new BufferedWriter(new FileWriter(filename));
-		for (String[] x : what)
+		try (FileWriter tmp=new FileWriter(filename))
 		{
-			for(int i=0;i<x.length;i++)
+			var fileWrite = new BufferedWriter(tmp);
+			for (String[] x : what)
 			{
-				if(
+				for (int i = 0; i < x.length; i++)
+				{
+					if (
 
 						//x[i].contains("ON") || //for test only
 
-						x[i].contains(" 1M") ||
-						x[i].contains(" 2M") ||
-						x[i].contains(" 3M") ||
-						x[i].contains(" 4M") ||
-						x[i].contains(" 5M") ||
-						x[i].contains(" 6M") ||
-						x[i].contains(" 9M") ||
-						x[i].contains(" 1Y")
-				)
-				fileWrite.write(x[i]);
+							x[i].contains(" 1M") ||
+									x[i].contains(" 2M") ||
+									x[i].contains(" 3M") ||
+									x[i].contains(" 4M") ||
+									x[i].contains(" 5M") ||
+									x[i].contains(" 6M") ||
+									x[i].contains(" 9M") ||
+									x[i].contains(" 1Y")
+					)
+						fileWrite.write(x[i]);
 
+				}
+				fileWrite.write("\n");
 			}
-			fileWrite.write("\n");
+			fileWrite.close();
 		}
-		fileWrite.close();
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
-	protected void everythingToFile(String filename, String name) throws IOException
+
+
+	public String[] seleniumListToStringArray(List<WebElement> webelement)
 	{
-		var fwdData=new ForwardCalculations();
-		var tenor=fwdData.getTenor();
-		var bids=fwdData.getBidfwdPercent();
-		var offers=fwdData.getOfferfwdPercent();
-		ArrayList<String> fwdOutput=null;
+//split into String[] put in arraylist creating a 2d arraylist/array
+		String[] stringarray = new String[webelement.size()];
 
-		for (int i=0;i<tenor.size();i++ )
+		for (int i = 1; i < webelement.size(); i++)
 		{
-			fwdOutput.add(tenor.get(i)+" "+bids.get(i)+" "+offers.get(i) +" "+ "::Last Update: " + LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + "\n");
+//convert from WebElement to String[]
+			stringarray[i] = webelement.get(i).getText();
+//split to String[] put in table
 		}
-
-		ArrayList<String> lastPrices=null;
-
-
-		var fileWrite = new BufferedWriter(new FileWriter(filename));
-		for (String x : lastPrices)
-		{
-			fileWrite.write(x);
-		}
-		fileWrite.write("Rough Forward Yields:+\n");
-		for(String x:fwdOutput)
-		{
-			fileWrite.write(x);
-		}
-		fileWrite.close();
+		return stringarray;
 	}
 }

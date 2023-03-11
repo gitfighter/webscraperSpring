@@ -63,10 +63,11 @@ public class ForwardCrawler extends WebCrawler
 
 			for (int i = 1; i < rows.size(); i++)
 			{
-//convert from WebElement to String[]
+//convert from WebElement to String
 				rowsFinal[i] = rows.get(i).getText();
 //split to String[] put in table
 				fwdTable.add(rowsFinal[i].split(" "));
+
 			}
 			driver.quit();
 
@@ -90,4 +91,6 @@ public class ForwardCrawler extends WebCrawler
 	{
 		return spot;
 	}
+
+
 }

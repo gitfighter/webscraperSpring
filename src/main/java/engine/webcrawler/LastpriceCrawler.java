@@ -10,8 +10,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 public class LastpriceCrawler extends WebCrawler
 {
@@ -29,7 +27,7 @@ public class LastpriceCrawler extends WebCrawler
 		if(url.contains("frankfurt"))
 		{
 			this.element="/html/body/app-root/app-wrapper/div/div[2]/app-bond/div[2]/div[2]/div[2]/div/div[1]/app-widget-price-box/div/div/table/tbody/tr[1]/td[2]";
-			this.timeout=2;
+			this.timeout=3;
 		}
 		else if(url.contains("investing.com"))
 		{
@@ -43,7 +41,7 @@ public class LastpriceCrawler extends WebCrawler
 		}
 		else if(url.contains("akk.hu"))
 		{
-			timeout=2;
+			timeout=3;
 			this.element=element;
 		}
 		else
@@ -56,9 +54,9 @@ public class LastpriceCrawler extends WebCrawler
 			url.contains("frankfurt")
 		)
 		{
-			TimeUnit.MILLISECONDS.sleep(new Random().nextInt(514,778)); //seems to need it not sure why
-			downloadSelenium();
-			TimeUnit.MILLISECONDS.sleep(new Random().nextInt(514,778)); //seems to need it not sure why
+			//TimeUnit.MILLISECONDS.sleep(new Random().nextInt(514,778));
+			downloadSeleniumNullCheck();
+
 		}
 		else if (url.contains("akk.hu"))
 		{
@@ -95,11 +93,35 @@ public class LastpriceCrawler extends WebCrawler
 
 			driver.get(url);
 
-			WebElement lastPrice=
-					new WebDriverWait(driver, Duration.ofSeconds(timeout)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(element)));
-			((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", lastPrice);
+				WebElement lastPrice =
+						new WebDriverWait(driver, Duration.ofSeconds(timeout)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(element)));
+				((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", lastPrice);
+				this.elementValue =lastPrice.getText();
 
-			this.elementValue =lastPrice.getText();
+			driver.quit();
+
+		} catch (Exception e)
+		{
+			throw new RuntimeException(e);
+		}
+	}
+
+	private void downloadSeleniumNullCheck()
+	{
+		try
+		{
+			final ChromeOptions options=new ChromeOptions();
+			options.addArguments("--headless");
+			var driver= new ChromeDriver(options);
+
+			driver.get(url);
+			while(this.elementValue==null)
+			{
+				WebElement lastPrice =
+						new WebDriverWait(driver, Duration.ofSeconds(timeout)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(element)));
+				((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", lastPrice);
+				this.elementValue = lastPrice.getText();
+			}
 
 			driver.quit();
 
