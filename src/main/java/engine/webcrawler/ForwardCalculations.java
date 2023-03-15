@@ -34,7 +34,8 @@ public class ForwardCalculations
 		try
 		{
 
-//split table into arraylists (column0>>> tenor, column1>>> bid, column2>>> offer)
+
+			//split table into arraylists (column0>>> tenor, column1>>> bid, column2>>> offer)
 			ArrayList<String> tenor = new ArrayList<>();
 			ArrayList<Double> bid = new ArrayList<>();
 			ArrayList<Double> offer = new ArrayList<>();

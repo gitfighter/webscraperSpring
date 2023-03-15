@@ -41,7 +41,7 @@ public class Router
 
 //writes last prices then fwdtables to files
 			var output=new Output();
-			output.arraylistToFile("output.txt", lpOutputValues);
+			output.arraylistStringToFile("output.txt", lpOutputValues);
 
 			output.fwdtableToFile("fwdoutput.txt",fwdOutputValues);
 

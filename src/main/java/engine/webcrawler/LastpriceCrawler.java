@@ -16,10 +16,11 @@ public class LastpriceCrawler extends WebCrawler
 	private String elementValue;
 	protected final String element;
 	private final String name;
+	private ChromeDriver driver;
 	private int timeout=0; //wait for element visibility
 
 //constuctor starts processing input sent by Router, calls functions
-	public LastpriceCrawler(String name, String url, String element) throws InterruptedException
+	public LastpriceCrawler(String name, String url, String element)
 	{
 		super(url);
 		this.name=name;
@@ -41,13 +42,14 @@ public class LastpriceCrawler extends WebCrawler
 		}
 		else if(url.contains("akk.hu"))
 		{
-			timeout=3;
+			timeout=6;
 			this.element=element;
 		}
 		else
 		{
 			this.element=element;
 		}
+		this.driver=driverInit();
 
 //using selenium or jsoup
 		if (
@@ -67,8 +69,19 @@ public class LastpriceCrawler extends WebCrawler
 
 	}
 
+//initializing selenium
+	ChromeDriver driverInit()
+	{
+		final ChromeOptions options=new ChromeOptions();
+		options.addArguments(
+				"--headless",
+				"--remote-allow-origins=*"
+		);
+
+		return new ChromeDriver(options);
+	}
+
 //sends elementvalue 1 by 1
-	@Override
 	void downloadJsoup()
 	{
 			try
@@ -87,10 +100,6 @@ public class LastpriceCrawler extends WebCrawler
 	{
 		try
 		{
-			final ChromeOptions options=new ChromeOptions();
-			options.addArguments("--headless");
-			var driver= new ChromeDriver(options);
-
 			driver.get(url);
 
 				WebElement lastPrice =
@@ -106,14 +115,11 @@ public class LastpriceCrawler extends WebCrawler
 		}
 	}
 
+//for frankfurt boerse
 	private void downloadSeleniumNullCheck()
 	{
 		try
 		{
-			final ChromeOptions options=new ChromeOptions();
-			options.addArguments("--headless");
-			var driver= new ChromeDriver(options);
-
 			driver.get(url);
 			while(this.elementValue==null)
 			{

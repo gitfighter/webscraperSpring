@@ -17,6 +17,7 @@ public class ForwardCrawler extends WebCrawler
 	private ArrayList<String[]> forwardTable;
 	private double spot;
 	private final String element;
+	private ChromeDriver driver;
 
 	public ForwardCrawler(String url, String element)
 	{
@@ -28,17 +29,27 @@ public class ForwardCrawler extends WebCrawler
 		else
 			this.element=element;
 
+		this.driver=driverInit();
+
 		downloadSelenium();
 	}
+
+	ChromeDriver driverInit()
+	{
+		final ChromeOptions options=new ChromeOptions();
+		options.addArguments(
+				"--headless",
+				"--remote-allow-origins=*"
+		);
+
+		return new ChromeDriver(options);
+	}
+
 	@Override
 	void downloadSelenium()
 	{
 		try
 		{
-			final ChromeOptions options = new ChromeOptions();
-			options.addArguments("--headless");
-			var driver = new ChromeDriver(options);
-
 			driver.get(url);
 
 //get spot rate
@@ -77,11 +88,6 @@ public class ForwardCrawler extends WebCrawler
 			throw new RuntimeException(e);
 		}
 	}
-	@Override
-	void downloadJsoup()
-	{
-	}
-
 	public ArrayList<String[]> getForwardTable()
 	{
 		return forwardTable;

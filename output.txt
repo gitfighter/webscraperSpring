@@ -1,0 +1,7 @@
+PEMEX48: 59.63 ::Last Update: 04:16:43
+ REPCON: 82.00 ::Last Update: 04:16:48
+ USDHUF: 361.96 ::Last Update: 04:16:53
+ TIPS30: 99.35 ::Last Update: 04:16:58
+ EURUSD: 1.0754 ::Last Update: 04:17:02
+ HUF6MREF: 15,03% ::Last Update: 04:17:10
+ HUF20YREF: 8,08% ::Last Update: 04:17:16

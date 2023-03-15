@@ -28,7 +28,7 @@ public class Output
 					"::Last Update: " + LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + "\n";
 	}
 
-	public void arraylistToFile(String filename, ArrayList<String> what) throws IOException
+	public void arraylistStringToFile(String filename, ArrayList<String> what) throws IOException
 	{
 		var fileWrite = new BufferedWriter(new FileWriter(filename));
 		for (String x : what)
@@ -38,7 +38,7 @@ public class Output
 		fileWrite.close();
 	}
 
-	public void arraylistContainingStringArrayToFile(String filename, ArrayList<String[]> what)
+	public void arraylistStringArrayToFile(String filename, ArrayList<String[]> what)
 	{
 		try (FileWriter tmp=new FileWriter(filename))
 		{
@@ -56,6 +56,29 @@ public class Output
 		}
 	}
 
+//similar to arraylistStringArrayToFile(), can specify the index range of string arrays to be printed
+	void fileWriteTweets(String filename, ArrayList<String[]> what, String accountname, int begin, int relativeend) throws IOException //should go to OutPut
+	{
+		try(BufferedWriter fileWrite = new BufferedWriter(new FileWriter(filename)))
+		{
+			fileWrite.write("Time of scraping: " + LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + "\n\n");
+
+			for (String[] x : what)
+			{
+//################### >>>> megmondani neki h a kov. ojjektet writeolja fileba
+				//	if(x[0].contains(comparator+"  "+accountname))
+				//	{
+				fileWrite.write(accountname + "\n");
+				for (int i = begin; i < x.length - relativeend; i++)
+				{
+					fileWrite.write(x[i] + '\n');
+				}
+				fileWrite.write("\n");
+				//	}
+			}
+			fileWrite.write("\n");
+		}
+	}
 	public void fwdtableToFile(String filename, ArrayList<String[]> what)
 	{
 		try (FileWriter tmp=new FileWriter(filename))
@@ -89,20 +112,5 @@ public class Output
 		{
 			e.printStackTrace();
 		}
-	}
-
-
-	public String[] seleniumListToStringArray(List<WebElement> webelement)
-	{
-//split into String[] put in arraylist creating a 2d arraylist/array
-		String[] stringarray = new String[webelement.size()];
-
-		for (int i = 1; i < webelement.size(); i++)
-		{
-//convert from WebElement to String[]
-			stringarray[i] = webelement.get(i).getText();
-//split to String[] put in table
-		}
-		return stringarray;
 	}
 }
